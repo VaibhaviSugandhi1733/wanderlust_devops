@@ -1,124 +1,202 @@
-<div>
-  <h1>Wanderlust</h1>
-  <h2>The Ultimate Travel Blog 🌍✈️ for You </h2>
-</div>
+🚀 Wanderlust - DevSecOps Automated CI/CD Pipeline
 
-![Preview Image](https://github.com/krishnaacharyaa/wanderlust/assets/116620586/17ba9da6-225f-481d-87c0-5d5a010a9538)
+## 1️⃣ Prerequisites
 
-<hr>
+Before starting, ensure:
 
-<div>
-  <h2>🔗 Important Links</h2>
-</div>
+* Ubuntu server or Jenkins node is ready.
+* You have **sudo privileges**.
+* Jenkins is installed and running on port `8080`.
+* SonarQube server is running and accessible.
+* GitHub repository: [`wanderlust_devops`](https://github.com/VaibhaviSugandhi1733/wanderlust_devops.git).
 
-<table border="1">
-  <tr>
-      <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/5ca6c472-5c73-41b2-a2df-389cc3e14881.png" alt="Discord Logo" width="50"></td>
-      <td><a href="https://discord.gg/FEKasAdCrG"> Join our project's Discord Channel here </a></td>
-  </tr>
-  <tr>
-      <td><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/ffda08c0-3c7a-46b0-b7ac-6bc374184ec7.png" alt="Figma Logo" width="50"></td>
-      <td><a href="https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1"> Find our project's Figma links here</a></td>
-  </tr>
-  <tr>
-      <td><img src="https://github.com/krishnaacharyaa/wanderlust/assets/133582566/47d71dd6-0390-479e-9d4e-3f077ef1a987.png" alt="YouTube Logo" width="50"></td>
-      <td><a href="https://youtu.be/ANfC1u_N_A0?feature=shared"> Find our Collaboration Video with TrainwithShubham here </a></td>
-  </tr>
-</table>
+---
 
-<hr>
+## 2️⃣ Install Required Tools
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/4a07b161-b8d6-4803-804a-3b0db699023e" width="35" height="35"> Goal of this project </h2>
-</div>
+### 2.1 System Update
 
-At its core, this project embodies two important aims:
+```bash
+sudo apt update
+```
 
-1. **Start Your Open Source Journey**: It's aimed to kickstart your open-source journey. Here, you'll learn the basics of Git and get a solid grip on the MERN stack and I strongly believe that learning and building should go hand in hand.
-2. **React Mastery**: Once you've got the basics down, a whole new adventure begins of mastering React. This project covers everything, from simple form validation to advanced performance enhancements. And I've planned much more cool stuff to add in the near future if the project hits more number of contributors.
+### 2.2 Install Java (Required for Jenkins and Sonar Scanner)
 
-_We want you to get the most out of this project—it's all about learning, contributing, and growing in the open-source community._
-<hr>
+```bash
+sudo apt install fontconfig openjdk-17-jre -y
+```
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35"> Features</h2>
-</div>
+### 2.3 Install Jenkins
 
-- **Featured Posts :** Highlight top travel stories and destinations on the homepage to showcase the best content and inspire readers with exciting travel experiences.
-- **User-Friendly Interface:** Navigate effortlessly through captivating travel content with our intuitive design.
-- **Discover By topic categories:** **Discover by Topic Categories**: Explore diverse travel experiences categorized by travel, nature, city, Adventure and Beaches..
-  
-<hr>
+```bash
+wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins-io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+sudo apt-get update
+sudo apt-get install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+```
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/90f3930e-5a12-4a4e-8ac9-0dc7d5396adb" width="35" height="35"> Ready to Contribute?</h2>
-</div>
+### 2.4 Install Docker
 
-Kindly go through [CONTRIBUTING.md](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) to understand everything from setup to contributing guidelines.
+```bash
+sudo apt install docker.io -y
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+sudo chown $USER /var/run/docker.sock
+```
 
-If you would like to contribute to the project, please follow our contribution guidelines.
+(Reboot if needed for permissions to apply.)
 
-<hr>
-<!-- Open Source Programs -->
-  <div>
-    <h2><img src="https://github.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/blob/master/Emojis/Hand%20gestures/Flexed%20Biceps.png?raw=true" width="35" height="35" > Open Source Programs</h2>
-  </div>
+### 2.5 Install Docker Compose
 
-  <table border="1" cellpadding="10">
-        <tr>
-            <td rowspan="2">
-                <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/21b2bc42-bdd5-487a-a083-1b262c2f6d9b" alt="GSSOC Logo" width="100" height="55">
-            </td>
-            <td>
-                <strong>GSSOC 2024</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                This project is part of GirlScript Summer of Code. We warmly welcome contributions from the community to help elevate Wanderlust.
-            </td>
-        </tr>
-    </table>
+```bash
+sudo apt install docker-compose -y
+```
 
-<hr>
+### 2.6 Install Trivy
 
-<!-- Code of conduct -->
-<div>
-<h2><img src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Handshake.png" width="35" height="35"> Code of Conduct</h2>
-</div>
+```bash
+sudo apt install wget apt-transport-https gnupg lsb-release -y
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo tee /usr/share/keyrings/trivy-keyring.asc
+echo "deb [signed-by=/usr/share/keyrings/trivy-keyring.asc] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+sudo apt update
+sudo apt install trivy -y
+```
 
-Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+### 2.7 Install OWASP Dependency-Check
 
-<hr>
+```bash
+wget https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.2/dependency-check-8.4.2-release.zip
+unzip dependency-check-8.4.2-release.zip -d /opt/
+sudo ln -s /opt/dependency-check/bin/dependency-check.sh /usr/local/bin/dependency-check.sh
+```
 
-<!-- License -->
-<div>
-<h2><img src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Page%20with%20Curl.png" width="35" height="35"> License</h2>
-</div>
+---
 
-This project is licensed under the [MIT License](./LICENSE).
+## 3️⃣ Jenkins Configuration
 
-<hr>
+1. **Access Jenkins**:
+   Open browser → `http://<server-ip>:8080`
+2. **Unlock Jenkins**:
 
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/af38ec84-7387-4af7-af85-8f408a4654e9" width="35" height="35"> Show Your Support</h2>
-</div>
+   ```bash
+   sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   ```
+3. **Install Plugins**:
 
-If you find this project interesting and inspiring, please consider showing your support by starring it on GitHub! Your star goes a long way in helping me reach more developers and encourages me to keep enhancing the project.
+   * Git
+   * SonarQube Scanner
+   * OWASP Dependency-Check
+   * Pipeline
+   * Docker Pipeline
+4. **Configure Global Tools**:
 
-Feel free to get in touch with me for any further queries or support, happy to help :)
+   * Add SonarQube server under **Manage Jenkins → Configure System**
+   * Add Docker credentials if pushing images to DockerHub
+5. **Create Credentials**:
 
-<hr>
+   * SonarQube token (as `sonar-token-id`)
+   * GitHub credentials if private repo
 
- <!-- Cotributors -->
-<div>
-  <h2><img src="https://github.com/Meetjain1/wanderlust/assets/133582566/20610b38-b287-4bf0-8f28-932b9c76163d" width="40" height="40"> Contributors</h2>
-</div>
+---
 
-We extend our heartfelt gratitude for your invaluable contribution to our project! Your efforts play a pivotal role in elevating Wanderlust to greater heights. 😊
+## 4️⃣ Clone the Repository
 
-<div>
-<a href="https://github.com/krishnaacharyaa/wanderlust/graphs/contributors">
-  <img width="90%" src="https://contrib.rocks/image?repo=krishnaacharyaa/wanderlust" />
-</a>
-</div>
+On Jenkins server:
+
+```bash
+cd /var/lib/jenkins/workspace
+git clone https://github.com/VaibhaviSugandhi1733/wanderlust_devops.git
+```
+
+---
+
+## 5️⃣ Prepare Jenkins Pipeline
+
+1. Open Jenkins → **New Item → Pipeline**
+2. Add repo URL (if using Pipeline from SCM)
+3. Point to `Jenkinsfile` in the repository
+4. Save
+
+---
+
+## 6️⃣ End-to-End Pipeline Execution
+
+### Stage 1: **Checkout Code**
+
+* Jenkins pulls the `wanderlust_devops` repo from GitHub.
+
+### Stage 2: **Install Tools (First Run Only)**
+
+* Java, Docker, Docker Compose, Trivy, OWASP Dependency-Check installed automatically if not already present.
+
+### Stage 3: **SonarQube Code Analysis**
+
+* Jenkins triggers Sonar Scanner to analyze source code.
+* Sonar Quality Gates enforce minimum quality standards.
+
+### Stage 4: **Dependency Check**
+
+* OWASP Dependency-Check scans for vulnerable libraries in `package.json` or other files.
+
+### Stage 5: **Build Docker Image**
+
+* Jenkins builds a Docker image for the backend service.
+* Trivy scans the image for vulnerabilities.
+
+### Stage 6: **Run Automated Tests**
+
+* Unit and integration tests are executed.
+* Jenkins archives test results.
+
+### Stage 7: **Deploy via Docker Compose**
+
+* Jenkins runs `docker-compose down` (if running) and `docker-compose up -d --build` to deploy the latest app.
+
+### Stage 8: **Post-Build Actions**
+
+* Jenkins generates reports:
+
+  * SonarQube report
+  * OWASP Dependency-Check report
+  * Trivy vulnerability scan report
+
+---
+
+## 7️⃣ Verify Deployment
+
+1. Check running containers:
+
+   ```bash
+   docker ps
+   ```
+2. Access the application in browser:
+
+   ```
+   http://<server-ip>:<mapped-port>
+   ```
+
+---
+
+## 8️⃣ Security & Quality Reports
+
+* **SonarQube**: View in SonarQube dashboard
+* **Dependency-Check**: `dependency-check-report.html` in Jenkins artifacts
+* **Trivy**: Vulnerability scan logs in Jenkins console
+
+---
+
+## 9️⃣ Optional (Push to DockerHub)
+
+If you want to push the Docker image:
+
+```bash
+docker login
+docker tag wanderlust:latest <dockerhub-username>/wanderlust:latest
+docker push <dockerhub-username>/wanderlust:latest
+```
+
+---
+
